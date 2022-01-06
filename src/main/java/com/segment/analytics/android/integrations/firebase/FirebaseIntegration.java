@@ -172,6 +172,14 @@ public class FirebaseIntegration extends Integration<FirebaseAnalytics> {
   }
 
   @Override
+  public void reset() {
+    super.reset();
+
+    firebaseAnalytics.resetAnalyticsData();
+    logger.verbose("firebaseAnalytics.reset();");
+  }
+
+  @Override
   public void track(TrackPayload track) {
     super.track(track);
 
