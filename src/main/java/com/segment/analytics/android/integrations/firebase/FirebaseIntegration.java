@@ -165,7 +165,7 @@ public class FirebaseIntegration extends Integration<FirebaseAnalytics> {
     for (Map.Entry<String, Object> entry : traits.entrySet()) {
       String trait = entry.getKey();
       String value = String.valueOf(entry.getValue());
-      trait = makeKey(trait);
+      trait = makeKey(trait, false);
       firebaseAnalytics.setUserProperty(trait, value);
       logger.verbose("firebaseAnalytics.setUserProperty(%s, %s);", trait, value);
     }
@@ -180,7 +180,7 @@ public class FirebaseIntegration extends Integration<FirebaseAnalytics> {
     if (EVENT_MAPPER.containsKey(event)) {
       eventName = EVENT_MAPPER.get(event);
     } else {
-      eventName = makeKey(event);
+      eventName = makeKey(event, true);
     }
     Properties properties = track.properties();
     Bundle formattedProperties = formatProperties(properties);
@@ -209,7 +209,7 @@ public class FirebaseIntegration extends Integration<FirebaseAnalytics> {
       if (PROPERTY_MAPPER.containsKey(property)) {
         property = PROPERTY_MAPPER.get(property);
       } else {
-        property = makeKey(property);
+        property = makeKey(property, false);
       }
       if (property.equals(Param.ITEMS) && value != null) {
         List<ValueMap> products = properties.getList("products", ValueMap.class);
@@ -234,7 +234,7 @@ public class FirebaseIntegration extends Integration<FirebaseAnalytics> {
         if (PRODUCT_MAPPER.containsKey(key)) {
           key = PRODUCT_MAPPER.get(key);
         } else {
-          key = makeKey(key);
+          key = makeKey(key, false);
         }
         putValue(mappedProduct, key, value);
       }
@@ -259,7 +259,7 @@ public class FirebaseIntegration extends Integration<FirebaseAnalytics> {
     }
   }
 
-  public static String makeKey(String key) {
+  public static String makeKey(String key, Boolean toLowerCase) {
     String[] forbiddenChars = {".", "-", " ", ":"};
     for (String forbidden : forbiddenChars) {
       if (key.contains(forbidden)) {
@@ -267,6 +267,12 @@ public class FirebaseIntegration extends Integration<FirebaseAnalytics> {
       }
     }
 
-    return key.substring(0, Math.min(key.length(), 40));
+    key = key.substring(0, Math.min(key.length(), 40));
+
+    if (toLowerCase) {
+      return key.toLowerCase();
+    } else {
+      return key;
+    }
   }
 }

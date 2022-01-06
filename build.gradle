@@ -73,7 +73,7 @@ dependencies {
   testImplementation 'org.powermock:powermock-classloading-xstream:2.0.2'
 }
 
-apply from: rootProject.file('gradle/attach-jar.gradle')
-apply from: rootProject.file('gradle/upload.gradle')
-apply from: rootProject.file('gradle/sign.gradle')
-apply from: rootProject.file('gradle/promote.gradle')
+// apply from: rootProject.file('gradle/attach-jar.gradle')
+// apply from: rootProject.file('gradle/upload.gradle')
+// apply from: rootProject.file('gradle/sign.gradle')
+// apply from: rootProject.file('gradle/promote.gradle')
